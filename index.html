@@ -3,7 +3,10 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" />
-    <title>Cosmic Racer 2.5D | Ultra Lightweight Space Edition</title>
+    <title>Street Racer 2.5D | Tokyo Shuto Highway GT</title>
+    <meta name="description" content="Ultra-fast 2.5D Japanese street racing on Tokyo Shuto Highway with iconic sports cars, aggressive rival battles, and authentic drift dynamics." />
+    <meta property="og:title" content="Street Racer 2.5D | Tokyo Shuto Highway GT" />
+    <meta property="og:description" content="Ultra-fast 2.5D Japanese street racing on Tokyo Shuto Highway with iconic sports cars, aggressive rival battles, and authentic drift dynamics." />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -22,46 +25,46 @@
     <!-- Welcome & Controls Dialog (Positioned at body level with direct pointer-events) -->
     <div id="welcome-dialog-overlay" class="welcome-dialog-overlay">
       <div class="welcome-dialog-card" role="dialog" aria-labelledby="welcome-title">
-        <div class="welcome-eyebrow">DEEP SPACE CIRCUIT · 2.5D ENGINE</div>
-        <h1 id="welcome-title" class="welcome-title">COSMIC RACER</h1>
-        <p class="welcome-sub">Ultra-lightweight 2.5D space racer · 60 FPS on any low-end hardware · Instant boot</p>
+        <div class="welcome-eyebrow">SHUTO HIGHWAY GT · 2.5D ENGINE</div>
+        <h1 id="welcome-title" class="welcome-title">STREET RACER</h1>
+        <p class="welcome-sub">Ultra-fast 2.5D street racing · Tuned supercars &amp; rival battles · 60 FPS on any hardware</p>
 
         <div class="welcome-controls-grid">
           <!-- Controls block -->
           <div class="welcome-control-block">
-            <div class="welcome-control-label">FLIGHT CONTROLS</div>
-            <div class="control-keys-list" aria-label="Flight Controls">
+            <div class="welcome-control-label">DRIVING CONTROLS</div>
+            <div class="control-keys-list" aria-label="Driving Controls">
               <div class="control-key-row">
                 <div class="control-kbd-pair">
                   <kbd class="welcome-key">W</kbd>
                   <kbd class="welcome-key">↑</kbd>
                 </div>
-                <span>SMOOTH ACCEL</span>
+                <span>THROTTLE ACCEL</span>
               </div>
               <div class="control-key-row">
                 <div class="control-kbd-pair">
                   <kbd class="welcome-key">A</kbd>
                   <kbd class="welcome-key">D</kbd>
                 </div>
-                <span>STEER / BANK</span>
+                <span>STEER / APEX</span>
               </div>
               <div class="control-key-row">
                 <div class="control-kbd-pair">
                   <kbd class="welcome-key">S</kbd>
                   <kbd class="welcome-key">↓</kbd>
                 </div>
-                <span>BRAKE / DRIFT INITIATE</span>
+                <span>BRAKE / HANDBRAKE</span>
               </div>
               <div class="control-key-row">
                 <div class="control-kbd-pair">
                   <kbd class="welcome-key">A/D</kbd>
                   <kbd class="welcome-key">+ S</kbd>
                 </div>
-                <span style="color: var(--accent); font-weight: 700;">SPACE DRIFT &amp; TURBO</span>
+                <span style="color: var(--accent); font-weight: 700;">POWER DRIFT &amp; TURBO</span>
               </div>
               <div class="control-key-row">
                 <kbd class="welcome-key welcome-key-wide">SPACE</kbd>
-                <span>JUMP (GND) / NITRO</span>
+                <span>NITROUS (NOS) / JUMP</span>
               </div>
               <div class="control-key-row">
                 <div class="control-kbd-pair">
@@ -94,7 +97,7 @@
               </button>
               <button class="cam-key-row cam-pill" type="button" data-cam="3">
                 <kbd class="welcome-key">3</kbd>
-                <span>SPACE DRONE</span>
+                <span>HELICOPTER CAM</span>
               </button>
             </div>
 
@@ -114,7 +117,7 @@
 
         <div class="welcome-footer-row">
           <button id="btn-welcome-start" class="welcome-start-btn" type="button">
-            <span id="welcome-start-text" class="welcome-start-text">LAUNCH COSMIC RACE</span>
+            <span id="welcome-start-text" class="welcome-start-text">LAUNCH STREET RACE</span>
             <kbd id="welcome-enter-kbd" class="welcome-enter-kbd">ENTER ↵</kbd>
           </button>
           <button id="btn-welcome-autopilot" class="welcome-start-btn welcome-esp-btn" type="button" style="margin-top: 10px;">
@@ -128,8 +131,8 @@
     <!-- Finish Overlay (Positioned at body level with direct pointer-events) -->
     <div id="hud-finish-overlay" class="welcome-dialog-overlay hud-finish-overlay hidden" role="dialog" aria-labelledby="hud-finish-title">
       <div class="welcome-dialog-card finish-dialog-card">
-        <div class="welcome-eyebrow">COSMIC CIRCUIT · 3 LAPS COMPLETE</div>
-        <h2 id="hud-finish-title" class="hud-finish-title">MISSION COMPLETE</h2>
+        <div class="welcome-eyebrow">SHUTO EXPRESSWAY · 3 LAPS COMPLETE</div>
+        <h2 id="hud-finish-title" class="hud-finish-title">RACE COMPLETE</h2>
         <div id="hud-finish-time" class="hud-finish-time">00:00.00</div>
         <div id="hud-finish-sub" class="hud-finish-sub">BEST LAP 00:00.00</div>
 
@@ -171,6 +174,18 @@
         <span id="hud-sector-delta" class="sector-delta-gain">-0.42</span>
       </div>
 
+      <!-- Atmosphere Lap Phase Transition Alert -->
+      <div id="hud-phase-alert" class="hud-phase-alert hidden">
+        <span id="hud-phase-icon">☀️</span>
+        <span id="hud-phase-title">PHASE 1 · DAYLIGHT GRAND PRIX</span>
+      </div>
+
+      <!-- Live Opponent Overtake / Proximity Warning -->
+      <div id="hud-overtake-alert" class="hud-overtake-alert hidden">
+        <span id="hud-overtake-dir">◀</span>
+        <span id="hud-overtake-msg">RIVAL OVERTAKING: VORTEX-1</span>
+      </div>
+
       <!-- Neobrutalist HUD Overlay -->
       <div id="hud-root">
         <!-- Top Row: Clickable Title, Performance Toggle, Race Rank Position, Lap Counter & Sound -->
@@ -181,7 +196,7 @@
               class="hud-brand-title"
               type="button"
               title="Click to open Controls Menu"
-            >Cosmic Racer</button>
+            >Street Racer GT</button>
           </div>
 
           <div class="hud-settings-anchor">

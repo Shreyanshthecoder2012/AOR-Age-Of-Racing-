@@ -4,13 +4,10 @@
   "version": "1.0.0",
   "type": "module",
   "scripts": {
-    "predev": "[ -d node_modules/.bin ] || bun install || npm install",
-    "dev": "vite --port=3000 --host=0.0.0.0",
-    "prebuild": "[ -d node_modules/.bin ] || bun install || npm install",
+    "dev": "vite --host 0.0.0.0 --port 3000",
     "build": "vite build",
-    "prelint": "[ -d node_modules/.bin ] || bun install || npm install",
     "lint": "tsc --noEmit",
-    "preview": "vite preview --port=3000 --host=0.0.0.0"
+    "preview": "vite preview --host 0.0.0.0 --port 3000"
   },
   "dependencies": {
     "@dimforge/rapier3d-compat": "^0.19.3",

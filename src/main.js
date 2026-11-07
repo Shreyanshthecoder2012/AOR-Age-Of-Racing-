@@ -61,6 +61,12 @@ function initApp() {
     onStunt: (name, score) => {
       updateStuntBadge(name, score);
     },
+    onPhaseChange: (phaseName, icon) => {
+      showPhaseAlert(phaseName, icon);
+    },
+    onOvertakeAlert: (rivalName, side, active) => {
+      showOvertakeAlert(rivalName, side, active);
+    },
     onFinish: (totalTime, bestLap, rank) => {
       showFinishOverlay(totalTime, bestLap, rank);
     },
@@ -89,6 +95,14 @@ function initApp() {
   const elSectorName = document.getElementById('hud-sector-name');
   const elSectorTime = document.getElementById('hud-sector-time');
   const elSectorDelta = document.getElementById('hud-sector-delta');
+
+  // Atmosphere Phase Transition Alert & Opponent Overtake Elements
+  const elPhaseAlert = document.getElementById('hud-phase-alert');
+  const elPhaseIcon = document.getElementById('hud-phase-icon');
+  const elPhaseTitle = document.getElementById('hud-phase-title');
+  const elOvertakeAlert = document.getElementById('hud-overtake-alert');
+  const elOvertakeDir = document.getElementById('hud-overtake-dir');
+  const elOvertakeMsg = document.getElementById('hud-overtake-msg');
 
   const elWelcomeOverlay = document.getElementById('welcome-dialog-overlay');
   const btnWelcomeStart = document.getElementById('btn-welcome-start');
@@ -262,6 +276,37 @@ function initApp() {
     }, 2800);
   }
 
+  // Lap Atmosphere Phase Transition Banner
+  let phaseAlertTimeout = null;
+  function showPhaseAlert(phaseName, phaseIcon) {
+    if (!elPhaseAlert) return;
+    if (phaseAlertTimeout) clearTimeout(phaseAlertTimeout);
+
+    if (elPhaseIcon) elPhaseIcon.textContent = phaseIcon || '☀️';
+    if (elPhaseTitle) elPhaseTitle.textContent = phaseName || 'DAYLIGHT CIRCUIT';
+
+    elPhaseAlert.classList.remove('hidden');
+    phaseAlertTimeout = setTimeout(() => {
+      elPhaseAlert.classList.add('hidden');
+    }, 3200);
+  }
+
+  // Real-time Rival Overtake Alert
+  function showOvertakeAlert(rivalName, side, active) {
+    if (!elOvertakeAlert) return;
+    if (active && rivalName) {
+      if (elOvertakeDir) {
+        elOvertakeDir.textContent = side === 'left' ? '◀' : '▶';
+      }
+      if (elOvertakeMsg) {
+        elOvertakeMsg.textContent = `RIVAL OVERTAKING ${side.toUpperCase()}: ${rivalName}!`;
+      }
+      elOvertakeAlert.classList.remove('hidden');
+    } else {
+      elOvertakeAlert.classList.add('hidden');
+    }
+  }
+
   // Persistent Session Leaderboard (Top 5 Fastest Lap Times)
   const LEADERBOARD_KEY = 'cosmic_racer_session_leaderboard_v1';
 
@@ -272,9 +317,9 @@ function initApp() {
     } catch (_e) {}
     // Seed initial session benchmarks with AI rivals
     return [
-      { pilot: 'VORTEX-1', vehicle: 'AI INTERCEPTOR', time: 14.85, isPlayer: false },
-      { pilot: 'SOLARIS', vehicle: 'AI CORVETTE', time: 15.42, isPlayer: false },
-      { pilot: 'TITAN-X', vehicle: 'AI SPEEDER', time: 16.10, isPlayer: false },
+      { pilot: 'NIGHT-HAWK', vehicle: 'SKYLINE GT-R R34', time: 14.85, isPlayer: false },
+      { pilot: 'APEX-RX', vehicle: 'MAZDA RX-7 SPIRIT', time: 15.42, isPlayer: false },
+      { pilot: 'GHOST-SUPRA', vehicle: 'SUPRA MK4 TURBO', time: 16.10, isPlayer: false },
     ];
   }
 
@@ -283,7 +328,7 @@ function initApp() {
     const list = getLeaderboard();
     list.push({
       pilot: 'YOU (PLAYER)',
-      vehicle: 'COSMIC SPEEDER',
+      vehicle: 'DRIFT GT-R SPEC',
       time: parseFloat(lapTimeSeconds.toFixed(2)),
       isPlayer: true,
       timestamp: Date.now(),

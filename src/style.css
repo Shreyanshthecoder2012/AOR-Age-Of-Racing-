@@ -376,6 +376,81 @@ button,
   100% { transform: translate(-50%, 0) scale(1); opacity: 1; }
 }
 
+/* Atmosphere Lap Phase Transition Banner */
+.hud-phase-alert {
+  position: fixed;
+  top: 11%;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 95;
+  background: #ffffff;
+  border: var(--border-thick);
+  box-shadow: var(--shadow-lg);
+  padding: 0.6rem 1.6rem;
+  font-family: var(--font-heading);
+  font-weight: 800;
+  font-size: 1.1rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ink);
+  animation: popInBounce 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  pointer-events: none;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+#hud-phase-icon {
+  font-size: 1.4rem;
+}
+
+#hud-phase-title {
+  color: var(--ink);
+  letter-spacing: 0.06em;
+}
+
+/* Live Rival Overtake / Proximity Warning Alert */
+.hud-overtake-alert {
+  position: fixed;
+  top: 25%;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 85;
+  background: #ff3e00;
+  color: #ffffff;
+  border: var(--border);
+  box-shadow: var(--shadow-md);
+  padding: 0.5rem 1.2rem;
+  font-family: var(--font-mono);
+  font-weight: 800;
+  font-size: 0.9rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  animation: overtakePulse 0.35s infinite alternate ease-in-out;
+  pointer-events: none;
+}
+
+.hud-overtake-alert.overtake-right {
+  background: #ff0055;
+}
+
+#hud-overtake-dir {
+  font-size: 1.2rem;
+  color: #ffea00;
+}
+
+#hud-overtake-msg {
+  font-weight: 800;
+}
+
+@keyframes overtakePulse {
+  from { transform: translateX(-50%) scale(0.96); }
+  to { transform: translateX(-50%) scale(1.04); }
+}
+
 /* Mute Button */
 .hud-mute-btn {
   display: flex;
