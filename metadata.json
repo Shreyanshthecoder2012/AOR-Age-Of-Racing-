@@ -1,0 +1,6 @@
+{
+  "name": "Desk Racer",
+  "description": "Lightweight 2.5D pseudo-3D cosmic space racer engineered for instant boot and ESP32 hardware compatibility",
+  "requestFramePermissions": [],
+  "majorCapabilities": []
+}
