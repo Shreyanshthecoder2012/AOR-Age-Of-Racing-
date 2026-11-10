@@ -2,353 +2,255 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" />
-    <title>Street Racer 2.5D | Tokyo Shuto Highway GT</title>
-    <meta name="description" content="Ultra-fast 2.5D Japanese street racing on Tokyo Shuto Highway with iconic sports cars, aggressive rival battles, and authentic drift dynamics." />
-    <meta property="og:title" content="Street Racer 2.5D | Tokyo Shuto Highway GT" />
-    <meta property="og:description" content="Ultra-fast 2.5D Japanese street racing on Tokyo Shuto Highway with iconic sports cars, aggressive rival battles, and authentic drift dynamics." />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Desk Racer</title>
+    <meta
+      name="description"
+      content="Peaceful slice-of-life Japanese driving journey through morning countryside, rain-soaked neon city, and coastal sunset highway in the art style of Your Name and Suzume."
+    />
+    <meta property="og:title" content="Desk Racer" />
+    <meta
+      property="og:description"
+      content="Peaceful slice-of-life Japanese driving journey through morning countryside, rain-soaked neon city, and coastal sunset highway in the art style of Your Name and Suzume."
+    />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400;1,700&family=Syne:wght@700;800&family=Orbitron:ital,wght@0,600;0,700;0,800;0,900;1,700;1,800;1,900&family=Press+Start+2P&display=swap"
+      href="https://fonts.googleapis.com/css2?family=M+PLUS+1p:wght@400;700;800&family=Space+Mono:ital,wght@0,400;0,700;1,400&family=Syne:wght@700;800&family=Zen+Antique&display=swap"
       rel="stylesheet"
     />
     <link rel="stylesheet" href="/src/style.css" />
   </head>
   <body>
-    <!-- 2.5D Canvas Container -->
+    <!-- 3D Three.js Scenic Canvas -->
     <div id="canvas-container"></div>
 
-    <!-- Center Countdown Number -->
-    <div id="hud-f1-countdown" class="hud-f1-countdown hidden">3</div>
-
-    <!-- Welcome & Controls Dialog (Positioned at body level with direct pointer-events) -->
+    <!-- Welcome & Drive Start Dialog -->
     <div id="welcome-dialog-overlay" class="welcome-dialog-overlay">
       <div class="welcome-dialog-card" role="dialog" aria-labelledby="welcome-title">
-        <div class="welcome-eyebrow">SHUTO HIGHWAY GT · 2.5D ENGINE</div>
-        <h1 id="welcome-title" class="welcome-title">STREET RACER</h1>
-        <p class="welcome-sub">Ultra-fast 2.5D street racing · Tuned supercars &amp; rival battles · 60 FPS on any hardware</p>
+        <div class="welcome-eyebrow">AOR OPEN WORLD · 16 KM² VELORA METROPOLIS</div>
+        <h1 id="welcome-title" class="welcome-title">VELORA (ヴェローラ)</h1>
+        <p class="welcome-sub">
+          Explore the 4,000 × 4,000 meter open world · 16 distinct districts from Green Heights to the Velora Grand Bridge ·
+          Formula 1, Rolls-Royce Phantom, Tuned GT-R · Day, Sunset, Night stars &amp; painterly rain · Dedicated for PC.
+        </p>
 
         <div class="welcome-controls-grid">
-          <!-- Controls block -->
           <div class="welcome-control-block">
-            <div class="welcome-control-label">DRIVING CONTROLS</div>
-            <div class="control-keys-list" aria-label="Driving Controls">
+            <div class="welcome-control-label">DRIVING CONTROLS (PC)</div>
+            <div class="control-keys-list">
               <div class="control-key-row">
                 <div class="control-kbd-pair">
                   <kbd class="welcome-key">W</kbd>
                   <kbd class="welcome-key">↑</kbd>
                 </div>
-                <span>THROTTLE ACCEL</span>
+                <span>ACCELERATE THROTTLE</span>
               </div>
               <div class="control-key-row">
                 <div class="control-kbd-pair">
                   <kbd class="welcome-key">A</kbd>
                   <kbd class="welcome-key">D</kbd>
                 </div>
-                <span>STEER / APEX</span>
+                <span>STEER LEFT / RIGHT</span>
               </div>
               <div class="control-key-row">
                 <div class="control-kbd-pair">
                   <kbd class="welcome-key">S</kbd>
                   <kbd class="welcome-key">↓</kbd>
                 </div>
-                <span>BRAKE / HANDBRAKE</span>
+                <span>BRAKE / DECELERATE</span>
               </div>
               <div class="control-key-row">
-                <div class="control-kbd-pair">
-                  <kbd class="welcome-key">A/D</kbd>
-                  <kbd class="welcome-key">+ S</kbd>
-                </div>
-                <span style="color: var(--accent); font-weight: 700;">POWER DRIFT &amp; TURBO</span>
+                <kbd class="welcome-key">SPACE</kbd>
+                <span style="color: var(--accent-cyan); font-weight: 700;">NITRO TURBO BOOST (340+ KM/H)</span>
               </div>
               <div class="control-key-row">
-                <kbd class="welcome-key welcome-key-wide">SPACE</kbd>
-                <span>NITROUS (NOS) / JUMP</span>
-              </div>
-              <div class="control-key-row">
-                <div class="control-kbd-pair">
-                  <kbd class="welcome-key">Q</kbd>
-                  <kbd class="welcome-key">E</kbd>
-                </div>
-                <span>BARREL ROLL (AIR)</span>
-              </div>
-              <div class="control-key-row">
-                <div class="control-kbd-pair">
-                  <kbd class="welcome-key">W</kbd>
-                  <kbd class="welcome-key">S</kbd>
-                </div>
-                <span>FLIP FRONT/BACK (AIR)</span>
+                <kbd class="welcome-key">R</kbd>
+                <span style="color: #f87171; font-weight: 700;">REPAIR CAR (AFTER CRASH)</span>
               </div>
             </div>
           </div>
 
-          <!-- Camera & Performance block -->
           <div class="welcome-control-block">
-            <div class="welcome-control-label">CAMERA VIEWS</div>
-            <div class="cam-keys-list">
-              <button class="cam-key-row cam-pill active" type="button" data-cam="1">
-                <kbd class="welcome-key">1</kbd>
-                <span>CHASE VIEW</span>
-              </button>
-              <button class="cam-key-row cam-pill" type="button" data-cam="2">
-                <kbd class="welcome-key">2</kbd>
-                <span>COCKPIT POV</span>
-              </button>
-              <button class="cam-key-row cam-pill" type="button" data-cam="3">
-                <kbd class="welcome-key">3</kbd>
-                <span>HELICOPTER CAM</span>
-              </button>
-            </div>
-
-            <div class="welcome-control-label" style="margin-top: 12px;">PERFORMANCE MODE</div>
-            <div class="cam-keys-list">
-              <button class="cam-key-row perf-pill active" type="button" data-mode="hd">
-                <kbd class="welcome-key">HD</kbd>
-                <span>STANDARD HD</span>
-              </button>
-              <button class="cam-key-row perf-pill" type="button" data-mode="eco">
-                <kbd class="welcome-key">ECO</kbd>
-                <span>⚡ 60FPS LOW-END MODE</span>
-              </button>
+            <div class="welcome-control-label">OPEN WORLD MAP &amp; CAMERA</div>
+            <div class="control-keys-list">
+              <div class="control-key-row">
+                <kbd class="welcome-key welcome-key-wide">M</kbd>
+                <span style="color: var(--accent-cyan); font-weight: 700;">OPEN VELORA 4x4 KM WORLD MAP</span>
+              </div>
+              <div class="control-key-row">
+                <div class="control-kbd-pair">
+                  <kbd class="welcome-key">1</kbd>
+                  <kbd class="welcome-key">2</kbd>
+                  <kbd class="welcome-key">3</kbd>
+                  <kbd class="welcome-key">4</kbd>
+                </div>
+                <span>CHASE / COCKPIT / HOOD / DRONE</span>
+              </div>
+              <div class="control-key-row">
+                <kbd class="welcome-key">V</kbd>
+                <span>SWITCH VEHICLE (GT-R / F1 / ROLLS)</span>
+              </div>
+              <div class="control-key-row">
+                <kbd class="welcome-key">T</kbd>
+                <span>CYCLE TIME (DAY / SUNSET / NIGHT)</span>
+              </div>
+              <div class="control-key-row">
+                <kbd class="welcome-key">C</kbd>
+                <span>PHOTO STUDIO / POSTCARD</span>
+              </div>
             </div>
           </div>
         </div>
 
         <div class="welcome-footer-row">
           <button id="btn-welcome-start" class="welcome-start-btn" type="button">
-            <span id="welcome-start-text" class="welcome-start-text">LAUNCH STREET RACE</span>
-            <kbd id="welcome-enter-kbd" class="welcome-enter-kbd">ENTER ↵</kbd>
-          </button>
-          <button id="btn-welcome-autopilot" class="welcome-start-btn welcome-esp-btn" type="button" style="margin-top: 10px;">
-            <span>PILOT ASSIST / AUTO-PILOT</span>
-            <kbd class="welcome-enter-kbd">P</kbd>
-          </button>
-        </div>
-      </div>
-    </div>
-
-    <!-- Finish Overlay (Positioned at body level with direct pointer-events) -->
-    <div id="hud-finish-overlay" class="welcome-dialog-overlay hud-finish-overlay hidden" role="dialog" aria-labelledby="hud-finish-title">
-      <div class="welcome-dialog-card finish-dialog-card">
-        <div class="welcome-eyebrow">SHUTO EXPRESSWAY · 3 LAPS COMPLETE</div>
-        <h2 id="hud-finish-title" class="hud-finish-title">RACE COMPLETE</h2>
-        <div id="hud-finish-time" class="hud-finish-time">00:00.00</div>
-        <div id="hud-finish-sub" class="hud-finish-sub">BEST LAP 00:00.00</div>
-
-        <!-- Persistent Session Leaderboard (Top 5 Fastest Laps) -->
-        <div class="finish-leaderboard-container">
-          <div class="finish-leaderboard-header">SESSION FASTEST LAPS · TOP 5</div>
-          <table class="finish-leaderboard-table">
-            <thead>
-              <tr>
-                <th>#</th>
-                <th>PILOT</th>
-                <th>VEHICLE</th>
-                <th>LAP TIME</th>
-              </tr>
-            </thead>
-            <tbody id="finish-leaderboard-body">
-              <!-- Populated dynamically via localStorage -->
-            </tbody>
-          </table>
-        </div>
-
-        <div class="finish-actions-row">
-          <button id="btn-finish-race-again" class="welcome-start-btn finish-action-btn" type="button">
-            <span class="welcome-start-text">RACE AGAIN</span>
+            <span class="welcome-start-text">START VELORA DRIVE</span>
             <kbd class="welcome-enter-kbd">ENTER ↵</kbd>
           </button>
-          <button id="btn-finish-autopilot" class="welcome-start-btn finish-action-btn finish-autopilot-btn" type="button">
-            <span class="welcome-start-text">AUTO-PILOT</span>
+          <button id="btn-welcome-autopilot" class="welcome-start-btn welcome-esp-btn" type="button">
+            <span>SIT BACK &amp; ZEN AUTO-CRUISE</span>
             <kbd class="welcome-enter-kbd">P</kbd>
           </button>
         </div>
       </div>
     </div>
 
-      <!-- Sector Checkpoint Split Alert -->
-      <div id="hud-sector-alert" class="hud-sector-alert hidden">
-        <span id="hud-sector-name">SEC 1</span>
-        <span id="hud-sector-time">00:00.00</span>
-        <span id="hud-sector-delta" class="sector-delta-gain">-0.42</span>
-      </div>
-
-      <!-- Atmosphere Lap Phase Transition Alert -->
-      <div id="hud-phase-alert" class="hud-phase-alert hidden">
-        <span id="hud-phase-icon">☀️</span>
-        <span id="hud-phase-title">PHASE 1 · DAYLIGHT GRAND PRIX</span>
-      </div>
-
-      <!-- Live Opponent Overtake / Proximity Warning -->
-      <div id="hud-overtake-alert" class="hud-overtake-alert hidden">
-        <span id="hud-overtake-dir">◀</span>
-        <span id="hud-overtake-msg">RIVAL OVERTAKING: VORTEX-1</span>
-      </div>
-
-      <!-- Neobrutalist HUD Overlay -->
-      <div id="hud-root">
-        <!-- Top Row: Clickable Title, Performance Toggle, Race Rank Position, Lap Counter & Sound -->
-        <header class="hud-top-bar">
-          <div class="hud-top-left-stack">
-            <button
-              id="hud-brand-logo"
-              class="hud-brand-title"
-              type="button"
-              title="Click to open Controls Menu"
-            >Street Racer GT</button>
-          </div>
-
-          <div class="hud-settings-anchor">
-            <div class="hud-top-right-row">
-              <!-- Live Race Position Indicator (e.g. 1ST / 7) -->
-              <div id="hud-position-card" class="hud-card hud-pos-badge" title="Live Race Position">
-                <span class="hud-pos-label">POS</span>
-                <span id="hud-pos-curr" class="hud-pos-curr">1ST</span>
-                <span id="hud-pos-total" class="hud-pos-total">/7</span>
-              </div>
-
-              <!-- Stunt Status & Multiplier Badge -->
-              <div id="hud-stunt-card" class="hud-card hud-stunt-badge" title="Active Stunt State & Multiplier">
-                <span class="hud-stunt-label">STUNT</span>
-                <span id="hud-stunt-state" class="hud-stunt-state">READY</span>
-                <span id="hud-stunt-mult" class="hud-stunt-mult">x1.0</span>
-              </div>
-
-              <!-- Quick Performance Mode Switcher -->
-              <button
-                id="btn-perf-toggle"
-                class="hud-card hud-perf-btn"
-                type="button"
-                title="Toggle HD / Low-End Eco Performance Mode"
-              >
-                ⚡ 60 FPS HD
-              </button>
-
-              <!-- Top-Right Lap Counter & Lap Timer -->
-              <div id="hud-lap-widget" class="hud-card hud-lap-widget">
-                <div id="hud-lap-header">
-                  <span>LAP <span id="hud-lap-curr" class="hud-lap-curr">1</span>/3</span>
-                  <span id="hud-sector-indicator" class="hud-sector-indicator">S1</span>
-                </div>
-                <div id="hud-lap-timer" class="hud-lap-timer" aria-label="00:00.00">
-                  <span class="timer-digit" id="lap-d0">0</span>
-                  <span class="timer-digit" id="lap-d1">0</span>
-                  <span class="timer-sep">:</span>
-                  <span class="timer-digit" id="lap-d2">0</span>
-                  <span class="timer-digit" id="lap-d3">0</span>
-                  <span class="timer-sep">.</span>
-                  <span class="timer-digit" id="lap-d4">0</span>
-                  <span class="timer-digit" id="lap-d5">0</span>
-                </div>
-                <div id="hud-lap-split" class="hud-lap-split hidden"></div>
-              </div>
-
-              <!-- Mute / Unmute Sound Button -->
-              <button
-                id="btn-mute-sound"
-                class="hud-card hud-mute-btn is-muted"
-                type="button"
-                aria-label="Toggle Sound (M)"
-                title="Toggle Sound (M)"
-              >
-                <svg id="icon-sound-on" class="mute-svg hidden" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-                  <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
-                  <path d="M15.54 8.46a5 5 0 0 1 0 7.07"></path>
-                  <path d="M19.07 4.93a10 10 0 0 1 0 14.14"></path>
-                </svg>
-                <svg id="icon-sound-off" class="mute-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-                  <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
-                  <line x1="23" y1="9" x2="17" y2="15"></line>
-                  <line x1="17" y1="9" x2="23" y2="15"></line>
-                </svg>
-              </button>
-            </div>
-          </div>
-        </header>
-
-        <!-- Bottom Row: Live Circuit Radar, Nitro Tank & Speedometer HUD -->
-        <footer class="hud-bottom-bar">
-          <!-- Live Minimap with AI tracking -->
-          <div class="hud-card hud-minimap-widget" title="Live Cosmic Circuit Radar">
-            <div class="hud-card-header">CIRCUIT RADAR · AI RIVALS</div>
-            <canvas id="minimap-canvas" width="600" height="390"></canvas>
-          </div>
-
-          <!-- Central Nitro Boost Tank Gauge -->
-          <div class="hud-card hud-nitro-widget" title="Nitro Boost Tank (SPACE / Boost Button)">
-            <div class="hud-card-header">NITRO TANK · DRIFT CHARGED</div>
-            <div class="nitro-bar-container">
-              <div id="hud-nitro-fill" class="nitro-bar-fill" style="width: 100%;"></div>
-            </div>
-            <div class="nitro-telemetry-row">
-              <span id="hud-nitro-status" class="nitro-status-text">READY</span>
-              <span id="hud-nitro-pct" class="nitro-pct-text">100%</span>
-            </div>
-          </div>
-
-          <!-- Speedometer Gauge -->
-          <div class="hud-card hud-speedo-gauge">
-            <div class="hud-card-header">WARP TELEMETRY</div>
-            <svg id="speedo-gauge-svg" viewBox="0 0 284 134" class="speedo-svg">
-              <polygon
-                id="speedo-bar-casing"
-                points="15,108 62,34 268,6 276,22 73,50 28,118"
-                class="speedo-bar-casing"
-                stroke="#1a1a1a"
-                stroke-width="2.6"
-                fill="rgba(26, 26, 26, 0.04)"
-              />
-              <g id="speedo-ticks-group"></g>
-            </svg>
-
-            <div class="speedo-readout-group">
-              <div id="hud-scale-speed" class="speedo-digits">0</div>
-              <div class="speedo-unit-label">KM/H</div>
-            </div>
-          </div>
-        </footer>
-
-      <!-- Mobile Touch Controls (Visible on mobile/touch screens) -->
-      <div id="mobile-touch-controls" class="mobile-touch-controls" role="region" aria-label="Touch Controls">
-        <div class="mobile-ctrl-cluster" role="group" aria-label="Steering">
-          <button id="btn-touch-left" class="mobile-ctrl-btn" type="button" aria-label="Steer Left">
-            <div class="mobile-ctrl-inner">
-              <svg class="mobile-ctrl-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6"><polyline points="13 17 8 12 13 7"></polyline></svg>
-              <span class="mobile-ctrl-label">LEFT</span>
-            </div>
+    <!-- Cinematic Minimalist HUD (Zero Road/Car Obstruction) -->
+    <div id="hud-root" class="hud-root">
+      <!-- Top Bar: Cinema Subtitle, Photo Studio & Radio Pill -->
+      <header class="hud-top-bar">
+        <div class="hud-top-left">
+          <button id="btn-open-map" class="hud-btn-pill hud-photo-btn" type="button" title="Open Velora World Map [M]">
+            <span>🗺️ VELORA MAP</span>
+            <kbd class="kbd-pill">M</kbd>
           </button>
-          <button id="btn-touch-right" class="mobile-ctrl-btn" type="button" aria-label="Steer Right">
-            <div class="mobile-ctrl-inner">
-              <svg class="mobile-ctrl-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6"><polyline points="11 17 16 12 11 7"></polyline></svg>
-              <span class="mobile-ctrl-label">RIGHT</span>
-            </div>
+          <button id="btn-open-photo" class="hud-btn-pill hud-photo-btn" type="button" title="Capture Postcard [C]">
+            <span>📷 PHOTO STUDIO</span>
+            <kbd class="kbd-pill">C</kbd>
           </button>
+
+          <!-- Discreet Radio Pill -->
+          <div class="hud-radio-pill">
+            <button id="btn-radio-play" class="radio-mini-btn" type="button" aria-label="Play/Pause">⏸</button>
+            <div class="hud-radio-meta">
+              <span id="ui-radio-title" class="hud-radio-title-mini">Midnight Rain on Shinjuku Glass</span>
+            </div>
+            <button id="btn-radio-next" class="radio-mini-btn" type="button" aria-label="Next Track">⏭</button>
+          </div>
         </div>
 
-        <div class="mobile-ctrl-cluster" role="group" aria-label="Throttle, Brake & Boost">
-          <button id="btn-touch-accel" class="mobile-ctrl-btn" type="button" aria-label="Accelerate">
-            <div class="mobile-ctrl-inner">
-              <svg class="mobile-ctrl-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6"><polyline points="17 13 12 8 7 13"></polyline></svg>
-              <span class="mobile-ctrl-label">ACCEL</span>
-            </div>
+        <!-- Center Japanese Cinema Subtitle -->
+        <div class="hud-cinema-card">
+          <div id="ui-location-kanji" class="hud-location-kanji">雨の新宿 · ネオンと水たまり</div>
+          <div id="ui-location-sub" class="hud-location-sub">TOKYO · SHINJUKU EXPRESSWAY · 23:15 PM</div>
+        </div>
+
+        <!-- Right Quick Toggles & Time Switcher -->
+        <div class="hud-top-right">
+          <div class="hud-time-group">
+            <button class="hud-time-btn" type="button" data-time-btn="day" title="Day [T]">☀️ DAY</button>
+            <button class="hud-time-btn active" type="button" data-time-btn="sunset" title="Sunset [T]">🌅 SUNSET</button>
+            <button class="hud-time-btn" type="button" data-time-btn="night" title="Night [T]">🌙 NIGHT</button>
+          </div>
+          <button id="btn-repair-car" class="hud-btn-pill repair-pill hidden" type="button" title="Repair Vehicle [R]">
+            <span id="ui-damage-text">🔧 REPAIR</span>
+            <kbd class="kbd-pill">R</kbd>
           </button>
-          <button id="btn-touch-brake" class="mobile-ctrl-btn" type="button" aria-label="Brake">
-            <div class="mobile-ctrl-inner">
-              <svg class="mobile-ctrl-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6"><polyline points="7 8 12 13 17 8"></polyline></svg>
-              <span class="mobile-ctrl-label">BRAKE</span>
-            </div>
+          <button id="btn-toggle-autocruise" class="hud-btn-pill cruise-pill" type="button">
+            <span>AUTO-CRUISE</span>
+            <kbd class="kbd-pill">P</kbd>
           </button>
-          <button id="btn-touch-boost" class="mobile-ctrl-btn mobile-ctrl-boost" type="button" aria-label="Warp Boost">
-            <div class="mobile-ctrl-inner">
-              <span class="mobile-ctrl-boost-icon">⚡</span>
-              <span class="mobile-ctrl-label">BOOST</span>
+        </div>
+      </header>
+
+      <!-- Bottom-Left GTA 5 Style GPS Radar / Mini-Map -->
+      <div class="gta-minimap-wrapper">
+        <canvas id="gta-minimap-canvas"></canvas>
+      </div>
+
+      <!-- Bottom Bar: Vehicle Switcher, Speedometer & Controls -->
+      <footer class="hud-bottom-bar-clean">
+        <div class="hud-quick-controls">
+          <div class="hud-veh-group">
+            <button class="hud-veh-btn active" type="button" data-veh-btn="coupe" title="GT Supercar [V]">🏎️ GT-R</button>
+            <button class="hud-veh-btn" type="button" data-veh-btn="f1" title="Formula 1 Racer [V]">🏁 F1 RACER</button>
+            <button class="hud-veh-btn" type="button" data-veh-btn="rolls" title="Rolls-Royce Luxury [V]">👑 ROLLS-ROYCE</button>
+          </div>
+          <button id="btn-toggle-rain" class="hud-btn-pill" type="button" title="Toggle Rain Weather">
+            <span>🌧️ RAIN: ON</span>
+          </button>
+          <button id="btn-toggle-headlights" class="hud-btn-pill" type="button" title="Headlights [H]">
+            <span>💡 LIGHTS</span>
+          </button>
+          <div id="ui-nitro-badge" class="hud-btn-pill nitro-pill" title="Press SPACE for Nitro Turbo Boost!">
+            <span>🚀 NITRO [SPACE]</span>
+          </div>
+        </div>
+
+        <div class="hud-speed-minimal">
+          <div class="hud-speed-text">
+            <span id="ui-speed-num" class="hud-speed-num-large">80</span>
+            <span class="hud-speed-unit-clean">KM/H</span>
+          </div>
+          <div class="hud-cam-pills">
+            <button class="hud-cam-mini-btn active" type="button" data-cam-btn="chase">1: CHASE</button>
+            <button class="hud-cam-mini-btn" type="button" data-cam-btn="cockpit">2: COCKPIT</button>
+            <button class="hud-cam-mini-btn" type="button" data-cam-btn="hood">3: HOOD</button>
+            <button class="hud-cam-mini-btn" type="button" data-cam-btn="drone">4: DRONE</button>
+          </div>
+        </div>
+      </footer>
+    </div>
+
+    <!-- Photo Studio / Postcard Modal -->
+    <div id="photo-modal-overlay" class="welcome-dialog-overlay photo-modal-overlay hidden" role="dialog" aria-labelledby="photo-title">
+      <div class="photo-modal-card">
+        <div class="photo-modal-header">
+          <div>
+            <div class="welcome-eyebrow">MAKOTO SHINKAI CINEMATOGRAPHY</div>
+            <h2 id="photo-title" class="photo-title">POSTCARD PHOTO STUDIO</h2>
+          </div>
+          <button id="btn-close-photo" class="photo-close-btn" type="button" aria-label="Close">✕</button>
+        </div>
+
+        <div class="photo-preview-box">
+          <img id="photo-postcard-img" class="photo-preview-img" alt="Postcard Preview" />
+        </div>
+
+        <div class="photo-controls-row">
+          <div class="photo-filter-group">
+            <span class="photo-ctrl-label">SHINKAI CINEMA FILTERS:</span>
+            <div class="photo-filter-buttons">
+              <button class="photo-filter-btn active" type="button" data-photo-filter="weathering">WEATHERING RAIN</button>
+              <button class="photo-filter-btn" type="button" data-photo-filter="your_name">YOUR NAME TWILIGHT</button>
+              <button class="photo-filter-btn" type="button" data-photo-filter="suzume">SUZUME GOLDEN HOUR</button>
+              <button class="photo-filter-btn" type="button" data-photo-filter="cel_90s">90s GHIBLI CEL</button>
+              <button class="photo-filter-btn" type="button" data-photo-filter="clean">PRISTINE 35mm</button>
             </div>
+          </div>
+
+          <div class="photo-sliders-group">
+            <label class="photo-slider-item">
+              <span>ORBIT ANGLE</span>
+              <input id="photo-slider-angle" type="range" min="-180" max="180" value="0" />
+            </label>
+            <label class="photo-slider-item">
+              <span>DISTANCE</span>
+              <input id="photo-slider-dist" type="range" min="-5" max="15" value="0" />
+            </label>
+          </div>
+        </div>
+
+        <div class="photo-modal-footer">
+          <button id="btn-photo-capture" class="welcome-start-btn" type="button">
+            <span>DOWNLOAD POSTCARD (.JPG)</span>
           </button>
         </div>
       </div>
     </div>
 
-    <script type="module" src="/src/main.js"></script>
+    <!-- Application Script Entry Point -->
+    <script type="module" src="/src/main.ts"></script>
   </body>
 </html>
